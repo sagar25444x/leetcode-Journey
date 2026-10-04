@@ -1,46 +1,46 @@
 class Solution {
 public:
     int maximumWealth(vector<vector<int>>& accounts) {
-
-        int maxWealth = 0;  // Stores the highest wealth found so far
-
-        // Go through each customer (each row)
+        int maxSum = INT_MIN;  // Stores the maximum wealth found
+        // Go through each customer
         for(int i = 0; i < accounts.size(); i++) {
-
-            int tracker = 0;  // Stores the current customer's total wealth
-
-            // Go through all bank accounts of the current customer
+            int tracker = 0;  // Stores current customer's total wealth
+            // Add all accounts of the current customer
             for(int j = 0; j < accounts[i].size(); j++) {
-
-                // Add the money from each account
                 tracker = tracker + accounts[i][j];
             }
-
-            // Update maxWealth if this customer is richer
-            if(tracker > maxWealth) {
-                maxWealth = tracker;
-            }
+            // Compare complete wealth with maximum wealth
+            maxSum = max(tracker, maxSum);
         }
-
-        // Return the wealth of the richest customer
-        return maxWealth;
+        // Return the richest customer's wealth
+        return maxSum;
     }
 };
-
-
-// ### Quick revision 🧠
-
-// ```text
-// i → customer / row
-// j → bank account / column
-// tracker → current customer's total wealth
-// maxWealth → highest wealth found so far
 // ```
 
-// The core pattern to remember:
+// ### Your important pattern 🧠
+
+// Remember this structure:
 
 // ```text
-// Outer loop → select a row
-// Inner loop → calculate that row's sum
-// Compare sum → update maximum
+// for each row/customer
+//     sum the entire row
+
+//     after finishing the row:
+//         compare sum with maximum
 // ```
+
+// Your use of:
+
+// ```cpp
+// max(tracker, maxSum)
+// ```
+
+// is actually a nice improvement over writing:
+
+// ```cpp
+// if(tracker > maxSum)
+//     maxSum = tracker;
+// ```
+
+// So **your main logic is right**. The only thing I'd change is moving the `max()` outside the inner loop.
